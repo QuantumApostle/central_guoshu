@@ -1,0 +1,290 @@
+/* Visual tokens. Change these first if you want a different palette. */
+:root {
+  --paper: #f3ecdf;
+  --paper-deep: #e6d9c4;
+  --ink: #1a1612;
+  --ink-soft: #4e463c;
+  --cinnabar: #8f2d2a;
+  --line: rgba(26, 22, 18, 0.18);
+  --measure: 40rem;
+  --wide: 68rem;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background:
+    linear-gradient(180deg, rgba(143, 45, 42, 0.05), transparent 18rem),
+    var(--paper);
+  color: var(--ink);
+  font-family: "Iowan Old Style", Palatino, "Palatino Linotype", "Songti SC", "Noto Serif SC", serif;
+  font-size: 1.125rem;
+  line-height: 1.65;
+}
+
+a {
+  color: inherit;
+}
+
+.skip {
+  position: absolute;
+  left: 1rem;
+  top: 0;
+  transform: translateY(-120%);
+  background: var(--ink);
+  color: var(--paper);
+  padding: 0.4rem 0.7rem;
+}
+
+.skip:focus {
+  transform: none;
+}
+
+.mast,
+.site-footer,
+main {
+  width: min(var(--wide), calc(100% - 2.5rem));
+  margin-inline: auto;
+}
+
+.mast {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 1.5rem;
+  padding: 1.75rem 0 1.1rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.mark {
+  text-decoration: none;
+}
+
+.mark-zh {
+  display: block;
+  font-size: 1.55rem;
+  letter-spacing: 0.14em;
+  line-height: 1.1;
+}
+
+.mark-en {
+  display: block;
+  margin-top: 0.2rem;
+  color: var(--ink-soft);
+  font-family: "Avenir Next", "Segoe UI", sans-serif;
+  font-size: 0.78rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 1.1rem;
+  font-family: "Avenir Next", "Segoe UI", sans-serif;
+  font-size: 0.92rem;
+  letter-spacing: 0.04em;
+}
+
+nav a {
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  padding-bottom: 0.1rem;
+}
+
+nav a:hover,
+nav a[aria-current="page"] {
+  border-bottom-color: var(--cinnabar);
+  color: var(--cinnabar);
+}
+
+main {
+  padding-bottom: 4rem;
+}
+
+.hero {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 1.75rem 2rem;
+  align-items: start;
+  padding: 3.2rem 0 2.2rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.seal {
+  width: 5.5rem;
+  height: 5.5rem;
+  margin-top: 0.35rem;
+  color: var(--cinnabar);
+}
+
+.seal text {
+  fill: currentColor;
+  font-size: 22px;
+  font-family: "Songti SC", "Songti TC", "STSong", "Noto Serif SC", serif;
+}
+
+.kicker {
+  margin: 0 0 0.6rem;
+  color: var(--cinnabar);
+  font-family: "Avenir Next", "Segoe UI", sans-serif;
+  font-size: 0.78rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+h1,
+h2 {
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+
+h1 {
+  margin: 0;
+  max-width: 16ch;
+  font-size: clamp(2.6rem, 6vw, 4.6rem);
+}
+
+.lede,
+.prose p,
+.prose li {
+  font-size: 1.2rem;
+}
+
+.lede {
+  max-width: var(--measure);
+  margin: 1rem 0 0;
+}
+
+.facts {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-bottom: 1px solid var(--line);
+}
+
+.facts li {
+  padding: 1.25rem 1.25rem 1.35rem 0;
+  border-top: 1px solid var(--line);
+}
+
+.facts li + li {
+  padding-left: 1.25rem;
+  border-left: 1px solid var(--line);
+}
+
+.facts strong {
+  display: block;
+  margin-bottom: 0.25rem;
+  font-size: 1.35rem;
+  font-weight: 500;
+}
+
+.facts span {
+  color: var(--ink-soft);
+  font-size: 0.98rem;
+}
+
+.split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2.5rem;
+  padding-top: 2.4rem;
+}
+
+.split article h2 {
+  margin: 0 0 0.6rem;
+  font-size: 1.8rem;
+}
+
+.split p {
+  margin: 0 0 1rem;
+  max-width: 36rem;
+}
+
+.text-link {
+  color: var(--cinnabar);
+  text-underline-offset: 0.18em;
+}
+
+.page-head {
+  padding: 2.8rem 0 1.4rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.page-head h1 {
+  max-width: 18ch;
+  font-size: clamp(2.3rem, 5vw, 3.8rem);
+}
+
+.prose {
+  max-width: var(--measure);
+  padding-top: 1.6rem;
+}
+
+.prose h2 {
+  margin: 2rem 0 0.5rem;
+  font-size: 1.7rem;
+}
+
+.prose p,
+.prose ul {
+  margin: 0 0 1rem;
+}
+
+.prose ul {
+  padding-left: 1.2rem;
+}
+
+.site-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 0 2rem;
+  border-top: 1px solid var(--line);
+  color: var(--ink-soft);
+  font-family: "Avenir Next", "Segoe UI", sans-serif;
+  font-size: 0.82rem;
+  letter-spacing: 0.03em;
+}
+
+@media (max-width: 720px) {
+  .mast,
+  .hero,
+  .facts,
+  .split,
+  .site-footer {
+    display: block;
+  }
+
+  .facts li,
+  .facts li + li {
+    padding-left: 0;
+    border-left: 0;
+  }
+
+  .seal {
+    margin-bottom: 1rem;
+  }
+
+  nav {
+    margin-top: 1rem;
+  }
+
+  .split article + article {
+    margin-top: 1.8rem;
+  }
+}
