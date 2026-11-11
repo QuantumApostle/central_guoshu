@@ -19,6 +19,7 @@ You can also open `index.html` in a browser. Links and the stylesheet are relati
 - `index.html` — entrance, with the opening paragraph and three facts
 - `history.html` — founding, the 1928 examination, wartime end
 - `training.html` — the two departments and what students practiced
+- `shuaijiao.html` — An online shuaijiao competition timer and scoring board
 - `css/styles.css` — all visual design
 
 There is no build step and no JavaScript. The header and footer are copied on each page. Change them in all three HTML files together.
