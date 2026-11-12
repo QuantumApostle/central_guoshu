@@ -1,646 +1,85 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Shuaijiao Competition Scoreboard</title>
-  <style>
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      background-color: #f0f2f5;
-      margin: 0;
-      padding: 15px;
-      box-sizing: border-box;
-    }
-    .container {
-      background: white;
-      padding: 25px;
-      border-radius: 12px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-      width: 100%;
-      max-width: 700px;
-      text-align: center;
-      position: relative;
-      box-sizing: border-box;
-    }
-    
-    /* Top Bar Controls */
-    .top-controls {
-      position: absolute;
-      top: 15px;
-      right: 15px;
-      display: flex;
-      gap: 6px;
-    }
-    .icon-btn {
-      background: #e2e8f0;
-      border: none;
-      padding: 6px 10px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-size: 13px;
-      font-weight: 600;
-      color: #334155;
-      transition: background 0.2s;
-    }
-    .icon-btn:hover {
-      background: #cbd5e1;
-    }
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Central Guoshu</title>
+    <meta
+      name="description"
+      content="A short introduction to the Central Guoshu Institute, the martial-arts school founded in Nanjing in 1928."
+    />
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <a class="skip" href="#content">Skip to content</a>
+    <header class="mast">
+      <a class="mark" href="index.html">
+        <span class="mark-zh" lang="zh-Hans">中央国术馆</span>
+        <span class="mark-en">Central Guoshu</span>
+      </a>
+      <nav aria-label="Primary">
+        <a href="index.html" aria-current="page">Home</a>
+        <a href="history.html">History</a>
+        <a href="training.html">Training</a>
+      </nav>
+    </header>
 
-    .title {
-      font-size: 24px;
-      font-weight: bold;
-      color: #1a252f;
-      margin-bottom: 15px;
-      margin-right: 70px; /* Leave space for top-controls */
-      border: 1px dashed transparent;
-      padding: 5px;
-      border-radius: 6px;
-      display: inline-block;
-      max-width: calc(100% - 80px);
-    }
-    .title:hover {
-      border-color: #cbd5e1;
-      background-color: #f8fafc;
-    }
-    .title:focus {
-      outline: none;
-      border-color: #3498db;
-      background-color: #fff;
-    }
-    
-    /* Weight Division Selector */
-    .division-container {
-      margin-bottom: 20px;
-    }
-    .division-container label {
-      font-weight: 600;
-      color: #555;
-      margin-right: 8px;
-    }
-    .division-container select {
-      padding: 8px 12px;
-      font-size: 15px;
-      border-radius: 6px;
-      border: 1px solid #ccc;
-      outline: none;
-      max-width: 100%;
-    }
-
-    /* Timer Section */
-    .timer-section {
-      background: #f8f9fa;
-      padding: 15px;
-      border-radius: 8px;
-      margin-bottom: 20px;
-      border: 1px solid #e9ecef;
-    }
-    .timer-setup {
-      margin-bottom: 10px;
-      display: flex;
-      justify-content: center;
-      gap: 8px;
-      align-items: center;
-      flex-wrap: wrap;
-    }
-    .timer-setup input {
-      width: 55px;
-      padding: 5px;
-      font-size: 16px;
-      text-align: center;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-    }
-    .timer {
-      font-size: 48px;
-      font-family: 'Courier New', Courier, monospace;
-      font-weight: bold;
-      color: #2c3e50;
-      margin-bottom: 10px;
-    }
-    .timer-buttons {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 6px;
-    }
-    .timer-buttons button {
-      padding: 8px 12px;
-      font-size: 14px;
-      cursor: pointer;
-      border: none;
-      border-radius: 5px;
-      background-color: #3498db;
-      color: white;
-      transition: background 0.2s;
-    }
-    .timer-buttons button:hover {
-      background-color: #2980b9;
-    }
-    .timer-buttons button.btn-reset-scores {
-      background-color: #e67e22;
-    }
-    .timer-buttons button.btn-reset-scores:hover {
-      background-color: #d35400;
-    }
-
-    /* Competitors Layout */
-    .competitors-container {
-      display: flex;
-      gap: 15px;
-      justify-content: space-between;
-      margin-bottom: 15px;
-    }
-    .competitor-card {
-      flex: 1;
-      padding: 15px;
-      border-radius: 10px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      box-sizing: border-box;
-    }
-    
-    /* Corner Colors: Red vs Blue */
-    .competitor-card.red {
-      background-color: #fff5f5;
-      border: 2px solid #ff4d4f;
-    }
-    .competitor-card.blue {
-      background-color: #f0f7ff;
-      border: 2px solid #1890ff;
-    }
-
-    .competitor-card input[type="text"] {
-      width: 95%;
-      padding: 8px;
-      font-size: 15px;
-      font-weight: bold;
-      text-align: center;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      margin-bottom: 10px;
-      outline: none;
-      background: #fff;
-      box-sizing: border-box;
-    }
-
-    .score-display {
-      font-size: 48px;
-      font-weight: bold;
-      margin: 5px 0;
-      color: #222;
-    }
-
-    .score-buttons {
-      display: flex;
-      gap: 8px;
-      justify-content: center;
-      margin-bottom: 12px;
-    }
-    .score-btn {
-      padding: 8px 14px;
-      font-size: 15px;
-      font-weight: bold;
-      cursor: pointer;
-      border: none;
-      border-radius: 6px;
-      color: white;
-      transition: transform 0.1s, opacity 0.2s;
-    }
-    .score-btn:active {
-      transform: scale(0.95);
-    }
-    .btn-add-1 {
-      background-color: #2ecc71;
-    }
-    .btn-add-1:hover {
-      background-color: #27ae60;
-    }
-    .btn-add-3 {
-      background-color: #f39c12;
-    }
-    .btn-add-3:hover {
-      background-color: #d68910;
-    }
-    .btn-subtract {
-      background-color: #e74c3c;
-    }
-    .btn-subtract:hover {
-      background-color: #c0392b;
-    }
-
-    /* Penalties Section */
-    .penalties-section {
-      border-top: 1px solid rgba(0,0,0,0.1);
-      width: 100%;
-      padding-top: 8px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 4px;
-    }
-    .penalty-label {
-      font-size: 12px;
-      font-weight: 600;
-      color: #666;
-    }
-    .penalty-controls {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .penalty-count {
-      font-size: 16px;
-      font-weight: bold;
-      color: #c0392b;
-    }
-    .pen-btn {
-      background: #cbd5e1;
-      border: none;
-      width: 26px;
-      height: 26px;
-      border-radius: 4px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-    .pen-btn:hover {
-      background: #94a3b8;
-      color: white;
-    }
-
-    /* Winner Banner */
-    .winner-banner {
-      margin-top: 15px;
-      padding: 12px;
-      font-size: 18px;
-      font-weight: bold;
-      border-radius: 8px;
-      background-color: #d4edda;
-      color: #155724;
-      border: 1px solid #c3e6cb;
-      display: none;
-    }
-
-    /* --- MOBILE RESPONSIVE MEDIA QUERY --- */
-    @media (max-width: 600px) {
-      body {
-        padding: 5px;
-      }
-      .container {
-        padding: 15px 10px;
-      }
-      .competitors-container {
-        flex-direction: column;
-        gap: 12px;
-      }
-      .timer {
-        font-size: 40px;
-      }
-      .score-display {
-        font-size: 42px;
-      }
-      .title {
-        font-size: 20px;
-        margin-right: 50px;
-      }
-      .top-controls {
-        top: 10px;
-        right: 8px;
-      }
-      .icon-btn {
-        padding: 4px 8px;
-        font-size: 11px;
-      }
-    }
-  </style>
-</head>
-<body>
-
-  <div class="container" id="appContainer">
-    <!-- Top Right Utilities -->
-    <div class="top-controls">
-      <button class="icon-btn" id="soundToggleBtn" onclick="toggleSound()" title="Toggle Whistle Sound">🔊</button>
-      <button class="icon-btn" onclick="toggleFullscreen()" title="Toggle Fullscreen">⛶</button>
-    </div>
-
-    <!-- Editable Competition Title -->
-    <div class="title" contenteditable="true" id="compTitle">Shuaijiao Competition</div>
-
-    <!-- Weight Class Selection -->
-    <div class="division-container">
-      <label for="weightClass">Weight Class:</label>
-      <select id="weightClass">
-        <option value="56kg">Flyweight (-56 kg)</option>
-        <option value="60kg">Bantamweight (-60 kg)</option>
-        <option value="65kg" selected>Featherweight (-65 kg)</option>
-        <option value="70kg">Lightweight (-70 kg)</option>
-        <option value="75kg">Welterweight (-75 kg)</option>
-        <option value="82kg">Middleweight (-82 kg)</option>
-        <option value="90kg">Light Heavyweight (-90 kg)</option>
-        <option value="100kg">Heavyweight (-100 kg)</option>
-        <option value="100+kg">Super Heavyweight (+100 kg)</option>
-      </select>
-    </div>
-
-    <!-- Timer -->
-    <div class="timer-section">
-      <div class="timer-setup">
-        <label>Set Time:</label>
-        <input type="number" id="inputMins" value="3" min="0" placeholder="Min"> min
-        <input type="number" id="inputSecs" value="30" min="0" max="59" placeholder="Sec"> sec
-      </div>
-      <div class="timer" id="display">03:30</div>
-      <div class="timer-buttons">
-        <button id="startResumeBtn" onclick="startOrContinueTimer()">Start</button>
-        <button onclick="pauseTimer()">Pause</button>
-        <button onclick="resetTimer()">Reset Timer</button>
-        <button class="btn-reset-scores" onclick="resetScores()">Reset Scores</button>
-      </div>
-    </div>
-
-    <!-- Competitors -->
-    <div class="competitors-container">
-      <!-- Competitor 1 (Red Corner) -->
-      <div class="competitor-card red">
-        <input type="text" value="Competitor 1" id="comp1Name" placeholder="Enter Name">
-        <div class="score-display" id="score1">0</div>
-        <div class="score-buttons">
-          <button class="score-btn btn-add-1" onclick="changeScore(1, 1)">+1</button>
-          <button class="score-btn btn-add-3" onclick="changeScore(1, 3)">+3</button>
-          <button class="score-btn btn-subtract" onclick="changeScore(1, -1)">-1</button>
+    <main id="content">
+      <section class="hero">
+        <svg class="seal" viewBox="0 0 88 88" aria-hidden="true">
+          <rect x="2.5" y="2.5" width="83" height="83" fill="none" stroke="currentColor" stroke-width="3" />
+          <rect x="8" y="8" width="72" height="72" fill="none" stroke="currentColor" stroke-width="1" />
+          <text x="32" y="52" text-anchor="middle">国</text>
+          <text x="56" y="52" text-anchor="middle">术</text>
+        </svg>
+        <div>
+          <p class="kicker">Nanjing · 1928</p>
+          <h1>A school for the national art</h1>
+          <p class="lede" id="lede">
+            The Central Guoshu Institute gathered Chinese martial arts into one public school:
+            a place to name the methods, train teachers, and put private practice into civic life.
+          </p>
         </div>
-        <div class="penalties-section">
-          <span class="penalty-label">Penalties</span>
-          <div class="penalty-controls">
-            <button class="pen-btn" onclick="changePenalty(1, -1)">-</button>
-            <span class="penalty-count" id="pen1">0</span>
-            <button class="pen-btn" onclick="changePenalty(1, 1)">+</button>
-          </div>
-        </div>
-      </div>
+      </section>
 
-      <!-- Competitor 2 (Blue Corner) -->
-      <div class="competitor-card blue">
-        <input type="text" value="Competitor 2" id="comp2Name" placeholder="Enter Name">
-        <div class="score-display" id="score2">0</div>
-        <div class="score-buttons">
-          <button class="score-btn btn-add-1" onclick="changeScore(2, 1)">+1</button>
-          <button class="score-btn btn-add-3" onclick="changeScore(2, 3)">+3</button>
-          <button class="score-btn btn-subtract" onclick="changeScore(2, -1)">-1</button>
-        </div>
-        <div class="penalties-section">
-          <span class="penalty-label">Penalties</span>
-          <div class="penalty-controls">
-            <button class="pen-btn" onclick="changePenalty(2, -1)">-</button>
-            <span class="penalty-count" id="pen2">0</span>
-            <button class="pen-btn" onclick="changePenalty(2, 1)">+</button>
-          </div>
-        </div>
-      </div>
-    </div>
+      <ul class="facts">
+        <li>
+          <strong>1928</strong>
+          <span>Founded in Nanjing under the Republic of China.</span>
+        </li>
+        <li>
+          <strong lang="zh-Hans">国术</strong>
+          <span>Guoshu, “national art,” the name given to Chinese martial arts.</span>
+        </li>
+        <li>
+          <strong>One roof</strong>
+          <span>Many lineages. The institute taught them; it did not invent them.</span>
+        </li>
+      </ul>
 
-    <!-- Winner Announcement Banner -->
-    <div class="winner-banner" id="winnerBanner"></div>
-  </div>
+      <section class="split">
+        <article>
+          <h2>The institute</h2>
+          <p>
+            Zhang Zhijiang led the school. Its job was to turn scattered teaching
+            into a curriculum that armies, schools, and public examinations could use.
+          </p>
+          <a class="text-link" href="history.html">Read the history</a>
+        </article>
+        <article>
+          <h2>The practice</h2>
+          <p>
+            Students learned empty-hand forms, weapons, paired work, and the public
+            sparring of the leitai. Internal and external methods sat in two departments.
+          </p>
+          <a class="text-link" href="training.html">See the training</a>
+        </article>
+      </section>
+    </main>
 
-  <script>
-    // --- UTILITIES: FULLSCREEN & SOUND TOGGLE ---
-    let soundEnabled = true;
-
-    function toggleSound() {
-      soundEnabled = !soundEnabled;
-      const btn = document.getElementById('soundToggleBtn');
-      btn.textContent = soundEnabled ? '🔊' : '🔇';
-    }
-
-    function toggleFullscreen() {
-      if (!document.fullscreenElement) {
-        document.documentElement.requestFullscreen().catch(err => {
-          alert(`Error attempting to enable fullscreen: ${err.message}`);
-        });
-      } else {
-        if (document.exitFullscreen) {
-          document.exitFullscreen();
-        }
-      }
-    }
-
-    // --- LOUD BASKETBALL REFEREE WHISTLE (Web Audio API) ---
-    let audioCtx = null;
-
-    function playWhistleSound() {
-      if (!soundEnabled) return;
-
-      if (!audioCtx) {
-        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-      }
-      if (audioCtx.state === 'suspended') {
-        audioCtx.resume();
-      }
-
-      const now = audioCtx.currentTime;
-      const duration = 1.3;
-
-      const masterGain = audioCtx.createGain();
-      masterGain.gain.setValueAtTime(0, now);
-      masterGain.gain.linearRampToValueAtTime(0.8, now + 0.03);
-      masterGain.gain.setValueAtTime(0.8, now + duration - 0.15);
-      masterGain.gain.exponentialRampToValueAtTime(0.001, now + duration);
-
-      const lfo = audioCtx.createOscillator();
-      const lfoGain = audioCtx.createGain();
-      lfo.frequency.setValueAtTime(28, now);
-      lfoGain.gain.setValueAtTime(120, now);
-
-      const frequencies = [2800, 3150, 3700];
-
-      frequencies.forEach(freq => {
-        const osc = audioCtx.createOscillator();
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(freq, now);
-
-        lfoGain.connect(osc.frequency);
-        osc.connect(masterGain);
-
-        osc.start(now);
-        osc.stop(now + duration);
-      });
-
-      lfo.connect(lfoGain);
-      lfo.start(now);
-      lfo.stop(now + duration);
-
-      masterGain.connect(audioCtx.destination);
-    }
-
-    // --- COUNTDOWN TIMER LOGIC ---
-    let remainingSeconds = 210;
-    let timerId = null;
-    let isRunning = false;
-    let isMatchEnded = false;
-
-    const display = document.getElementById('display');
-    const startResumeBtn = document.getElementById('startResumeBtn');
-    const inputMins = document.getElementById('inputMins');
-    const inputSecs = document.getElementById('inputSecs');
-
-    function formatTime(seconds) {
-      const mins = Math.floor(seconds / 60);
-      const secs = seconds % 60;
-      return `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
-    }
-
-    function updateDisplay() {
-      display.textContent = formatTime(remainingSeconds);
-    }
-
-    function syncTimeFromInputs() {
-      if (!isRunning) {
-        const mins = parseInt(inputMins.value) || 0;
-        const secs = parseInt(inputSecs.value) || 0;
-        remainingSeconds = (mins * 60) + secs;
-        updateDisplay();
-      }
-    }
-
-    inputMins.addEventListener('input', syncTimeFromInputs);
-    inputSecs.addEventListener('input', syncTimeFromInputs);
-
-    function startOrContinueTimer() {
-      if (!isRunning && remainingSeconds > 0) {
-        if (startResumeBtn.textContent === 'Start') {
-          const mins = parseInt(inputMins.value) || 0;
-          const secs = parseInt(inputSecs.value) || 0;
-          remainingSeconds = (mins * 60) + secs;
-          isMatchEnded = false;
-        }
-
-        if (remainingSeconds <= 0) return;
-
-        isRunning = true;
-        startResumeBtn.textContent = 'Continue';
-        
-        timerId = setInterval(() => {
-          if (remainingSeconds > 0) {
-            remainingSeconds--;
-            updateDisplay();
-          }
-
-          if (remainingSeconds === 0) {
-            pauseTimer();
-            playWhistleSound();
-            checkTimerExpirationWinner();
-          }
-        }, 1000);
-      }
-    }
-
-    function pauseTimer() {
-      if (isRunning) {
-        clearInterval(timerId);
-        timerId = null;
-        isRunning = false;
-        startResumeBtn.textContent = 'Continue';
-      }
-    }
-
-    function resetTimer() {
-      pauseTimer();
-      const mins = parseInt(inputMins.value) || 0;
-      const secs = parseInt(inputSecs.value) || 0;
-      remainingSeconds = (mins * 60) + secs;
-      updateDisplay();
-      startResumeBtn.textContent = 'Start';
-      isMatchEnded = false;
-      checkSpreadWinner();
-    }
-
-    // --- SCORE, PENALTY & WINNER LOGIC ---
-    let score1 = 0;
-    let score2 = 0;
-    let pen1 = 0;
-    let pen2 = 0;
-
-    function changeScore(competitorNum, delta) {
-      if (competitorNum === 1) {
-        score1 = Math.max(0, score1 + delta);
-        document.getElementById('score1').textContent = score1;
-      } else if (competitorNum === 2) {
-        score2 = Math.max(0, score2 + delta);
-        document.getElementById('score2').textContent = score2;
-      }
-      checkSpreadWinner();
-    }
-
-    function changePenalty(competitorNum, delta) {
-      if (competitorNum === 1) {
-        pen1 = Math.max(0, pen1 + delta);
-        document.getElementById('pen1').textContent = pen1;
-      } else if (competitorNum === 2) {
-        pen2 = Math.max(0, pen2 + delta);
-        document.getElementById('pen2').textContent = pen2;
-      }
-    }
-
-    function resetScores() {
-      score1 = 0;
-      score2 = 0;
-      pen1 = 0;
-      pen2 = 0;
-      document.getElementById('score1').textContent = score1;
-      document.getElementById('score2').textContent = score2;
-      document.getElementById('pen1').textContent = pen1;
-      document.getElementById('pen2').textContent = pen2;
-      isMatchEnded = false;
-      checkSpreadWinner();
-    }
-
-    function checkSpreadWinner() {
-      const banner = document.getElementById('winnerBanner');
-      const name1 = document.getElementById('comp1Name').value || 'Competitor 1';
-      const name2 = document.getElementById('comp2Name').value || 'Competitor 2';
-      const diff = Math.abs(score1 - score2);
-
-      if (diff >= 6 && remainingSeconds > 0) {
-        if (!isMatchEnded) {
-          playWhistleSound();
-          pauseTimer();
-          isMatchEnded = true;
-        }
-        if (score1 > score2) {
-          banner.textContent = `🏆 Winner by point spread: ${name1}!`;
-        } else {
-          banner.textContent = `🏆 Winner by point spread: ${name2}!`;
-        }
-        banner.style.display = 'block';
-      } else if (remainingSeconds > 0) {
-        banner.style.display = 'none';
-        isMatchEnded = false;
-      }
-    }
-
-    function checkTimerExpirationWinner() {
-      const banner = document.getElementById('winnerBanner');
-      const name1 = document.getElementById('comp1Name').value || 'Competitor 1';
-      const name2 = document.getElementById('comp2Name').value || 'Competitor 2';
-
-      if (score1 > score2) {
-        banner.textContent = `⏰ Time's up! Winner: ${name1} (${score1} - ${score2})`;
-      } else if (score2 > score1) {
-        banner.textContent = `⏰ Time's up! Winner: ${name2} (${score2} - ${score1})`;
-      } else {
-        banner.textContent = `⏰ Time's up! The match is a Draw (${score1} - ${score2})`;
-      }
-      banner.style.display = 'block';
-    }
-
-    updateDisplay();
-  </script>
-</body>
+    <footer class="site-footer">
+      <span>An introduction, not an archive.</span>
+      <span lang="zh-Hans">中央国术馆</span>
+    </footer>
+  </body>
 </html>
